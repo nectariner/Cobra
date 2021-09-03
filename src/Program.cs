@@ -1,11 +1,25 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using static Cobra.src.Scanner;
+using static Cobra.src.Token;
 
 namespace cobra
 {
 	class Program
 	{
+		static bool hadError = false;
+		static public void error(int line, string message)
+		{
+			report(line, "", message);
+		}
+
+		static void report(int line, string where, string message)
+		{
+			Console.WriteLine("[Line " + line + "] Error " + where + ": " + message);
+			hadError = true;
+		}
+
 		static void runFile(String path)
 		{
 			String text = File.ReadAllText(Path.GetFullPath(path));
@@ -17,22 +31,23 @@ namespace cobra
 
 		private static void runPrompt()
 		{
-			for (; ; )
+			while (true)
 			{
 				Console.Write('>');
 				run(Console.ReadLine());
+				hadError = false;
 			}
 		}
 
 		private static void run(String source)
 		{
-			var tokens = source.Split(new char[] { ' ', ',', '?', '\n' }, StringSplitOptions.TrimEntries);
-			Console.WriteLine("tokenised text:");
-			foreach (var token in tokens)
+			Cobra.src.Scanner scanner = new Cobra.src.Scanner(source);
+			List<Cobra.src.Token> tokens = scanner.ScanTokens();
+
+			foreach (Cobra.src.Token token in tokens)
 			{
 				Console.WriteLine(token);
 			}
-			Console.WriteLine("----------------");
 
 		}
 
