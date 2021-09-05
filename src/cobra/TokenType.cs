@@ -1,4 +1,4 @@
-namespace Cobra.src
+namespace Cobra
 {
 	public enum TokenType
 	{

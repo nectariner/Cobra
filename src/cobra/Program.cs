@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using static Cobra.src.Scanner;
-using static Cobra.src.Token;
+using Cobra;
 
 namespace cobra
 {
@@ -41,10 +40,10 @@ namespace cobra
 
 		private static void run(String source)
 		{
-			Cobra.src.Scanner scanner = new Cobra.src.Scanner(source);
-			List<Cobra.src.Token> tokens = scanner.ScanTokens();
+			Cobra.Scanner scanner = new Cobra.Scanner(source);
+			List<Cobra.Token> tokens = scanner.ScanTokens();
 
-			foreach (Cobra.src.Token token in tokens)
+			foreach (Cobra.Token token in tokens)
 			{
 				Console.WriteLine(token);
 			}
@@ -53,6 +52,14 @@ namespace cobra
 
 		static void Main(string[] args)
 		{
+			Expression expression = new Binary(
+				new Unary(
+					new Cobra.Token(Cobra.TokenType.MINUS, "-", null, 1),
+					new Literal(123)),
+				new Cobra.Token(Cobra.TokenType.STAR, "*", null, 1),
+				new Grouping(
+					new Literal(45.67)));
+			Console.WriteLine(new AstPrinter().print(expression));
 			Console.WriteLine(args.Length);
 			if (args.Length > 1)
 			{

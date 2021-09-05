@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Diagnostics.Tracing;
-using System.Xml;
 using System;
-using System.IO;
 using System.Collections.Generic;
-using static Cobra.src.Token;
 using static cobra.Program;
 
-namespace Cobra.src
+namespace Cobra
 {
 	public class Scanner
 	{

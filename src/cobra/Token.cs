@@ -1,5 +1,4 @@
-using System;
-namespace Cobra.src
+namespace Cobra
 {
 	public class Token
 	{
