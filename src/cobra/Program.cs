@@ -15,7 +15,7 @@ namespace cobra
 
 		static void report(int line, string where, string message)
 		{
-			Console.WriteLine("[Line " + line + "] Error " + where + ": " + message);
+			Console.Error.WriteLine("[Line " + line + "] Error " + where + ": " + message);
 			hadError = true;
 		}
 
@@ -43,11 +43,12 @@ namespace cobra
 			Cobra.Scanner scanner = new Cobra.Scanner(source);
 			List<Cobra.Token> tokens = scanner.ScanTokens();
 
-			foreach (Cobra.Token token in tokens)
-			{
-				Console.WriteLine(token);
-			}
+			Parser parser = new Parser(tokens);
+			Expression expression = parser.parse();
 
+			if (hadError) return;
+
+			Console.WriteLine(new AstPrinter().print(expression));
 		}
 
 		static void Main(string[] args)
