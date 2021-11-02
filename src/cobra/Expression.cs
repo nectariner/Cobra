@@ -6,10 +6,6 @@ namespace cobra
 	public abstract class Expression
 	{
 		public abstract R Accept<R>(IVisitor<R> visitor);
-		void x()
-		{
-			return;
-		}
 	}
 
 

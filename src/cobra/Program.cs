@@ -7,7 +7,9 @@ namespace cobra
 {
 	class Program
 	{
+		private static Interpreter interpreter = new Interpreter();
 		static bool hadError = false;
+		static public bool HadRuntimeError = false;
 		static public void error(int line, string message)
 		{
 			report(line, "", message);
@@ -26,6 +28,8 @@ namespace cobra
 			Console.WriteLine("----------------");
 
 			run(text);
+			if (hadError) Environment.Exit(1);
+			if (HadRuntimeError) Environment.Exit(2);
 		}
 
 		private static void runPrompt()
@@ -48,7 +52,7 @@ namespace cobra
 
 			if (hadError) return;
 
-			Console.WriteLine(new AstPrinter().print(expression));
+			interpreter.interpret(expression);
 		}
 
 		static void Main(string[] args)
